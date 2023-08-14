@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sre-exercise-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sre-exercise-app
+  template:
+    metadata:
+      labels:
+        app: sre-exercise-app
+    spec:
+      containers:
+        - name: sre-exercise-container
+          image: tu_usuario/sre-exercise:latest  # Cambia esto por tu imagen Docker
+          ports:
+            - containerPort: 8080
