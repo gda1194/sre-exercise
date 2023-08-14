@@ -16,6 +16,7 @@ import (
 	"sre-exercise/internal"
 	"sre-exercise/internal/openTelemetry"
 	"sre-exercise/internal/pageSpeedInsight"
+	"sre-exercise/internal/processor"
 	"sre-exercise/kit/platform/server"
 	"sre-exercise/kit/platform/syslog"
 	"syscall"
@@ -40,10 +41,10 @@ func Run() error {
 		return err
 	}
 	otel.SetTracerProvider(tracer)
-	tp := otel.Tracer(internal.TRACER_NAME)
+	//tp := otel.Tracer(internal.TRACER_NAME)
 
 	// Orchestra
-	//processorSrv := processor.NewProcessorService(srvPerformance, syslog.Logger{Logger: logger})
+	processorSrv := processor.NewProcessorService(srvPerformance, syslog.Logger{Logger: logger})
 
 	// health
 	errs := make(chan error, 2)
@@ -56,14 +57,15 @@ func Run() error {
 	scheduler := cron.New()
 	scheduler.AddFunc("@every 1m", func() {
 		// iniciamos la traza
-		_, span := tp.Start(ctx, internal.SPAN_NAME)
+		//_, span := tp.Start(ctx, internal.SPAN_NAME)
 
-		logger.Log(fmt.Sprintf("TraceID: %v", span.SpanContext().TraceID()))
+		//logger.Log(fmt.Sprintf("TraceID: %v", span.SpanContext().TraceID()))
 
-		srvPerformance.DoRequest(syslog.Logger{Logger: logger}, internal.MARCA_HOST)
+		//srvPerformance.DoRequest(syslog.Logger{Logger: logger}, internal.MARCA_HOST)
 
 		// terminamos la traza
-		span.End()
+		//span.End()
+		processorSrv.WorkFlow(ctx)
 		tracer.ForceFlush(ctx)
 	})
 	go func() {

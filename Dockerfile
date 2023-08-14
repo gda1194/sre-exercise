@@ -2,7 +2,7 @@
 FROM golang:1.20
 
 # Directorio de trabajo
-WORKDIR /src/app
+WORKDIR /app
 
 # Dependencias
 COPY go.mod go.sum ./
@@ -11,12 +11,13 @@ RUN go mod download
 # Copiar codigo fuente
 COPY . ./
 
+# Crear ejecutable
 RUN go build ./cmd/api/main.go
 
 # Puerto
 EXPOSE 90
 
-#
-CMD ["./src/app"]
+# Ejectutar
+CMD ["./main"]
 
 
