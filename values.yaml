@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: sre-exercise-container
-          image: tu_usuario/sre-exercise:latest  # Cambia esto por tu imagen Docker
+          image: gda0900/sre-exercise:latest  # Cambia esto por tu imagen Docker
           ports:
             - containerPort: 8080

@@ -52,16 +52,6 @@ func Run() error {
 	srv.RegisterRoute(http.MethodGet, "/health", gin.WrapH(handlerHealth))
 	srv.Run()
 
-	i := 0
-	for {
-		if i == 10 {
-			break
-		}
-
-		//tracer.Shutdown(ctx)
-		i++
-	}
-
 	// cron
 	scheduler := cron.New()
 	scheduler.AddFunc("@every 1m", func() {
