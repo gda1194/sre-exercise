@@ -7,6 +7,7 @@ import (
 
 func main() {
 	err := bootstrap.Run()
+	// Hola
 	if err != nil {
 		log.Fatal(err)
 	}
